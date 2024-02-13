@@ -26,6 +26,36 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+.gradient-border {
+  position: relative;
+  background: #fff; /* Background color of the div */
+  padding: 20px; /* Adjust padding as needed */
+  /* Ensuring enough space for the border */
+}
+
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    rgba(20, 20, 22, 0.3) 0%,
+    rgba(102, 120, 138, 0.4) 10%,
+    rgba(102, 120, 138, 0.4) 90%,
+    rgba(20, 20, 22, 0.3) 100%
+  );
+  z-index: -1;
+  /* Adjust the border width here */
+  padding: 3px; /* This acts as the border width */
+  /* Round corners if you like */
+  border-radius: 5px; /* Optional: if you want rounded corners */
+  box-sizing: border-box;
+  /* Make the pseudo-element slightly larger to handle the border */
+  margin: -3px; /* Adjust margin based on the border width */
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
