@@ -11,6 +11,10 @@ interface GameProps {
   turn: string;
   socket: any;
   numberOfWrongs: number;
+  round: number;
+  name: string;
+  allowType: boolean;
+  setAllowType: Dispatch<SetStateAction<boolean>>;
 }
 
 const Game: React.FC<GameProps> = ({
@@ -18,18 +22,25 @@ const Game: React.FC<GameProps> = ({
   turn,
   socket,
   numberOfWrongs,
+  round,
+  name,
+  allowType,
+  setAllowType,
 }) => {
   const [wordBlockLetters, setWordBlockLetters] = useState<LetterType[][]>([]);
   const handleKeyDown = (event: KeyboardEvent) => {
     const char = event.key;
 
     if (isAlphabetical(char) && char != "Shift") {
-      socket.emit("send_letter", { letter: char });
+      socket.emit("send_letter", { letter: char, name });
     }
   };
 
   useEffect(() => {
-    window.addEventListener("keydown", handleKeyDown);
+    if (allowType) {
+      window.addEventListener("keydown", handleKeyDown);
+      setAllowType(false);
+    }
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
@@ -58,7 +69,10 @@ const Game: React.FC<GameProps> = ({
   console.log("word block letter are", wordBlockLetters);
 
   return (
-    <div className="flex flex-col gap-10 w-[800px] h-[500px]">
+    <div className="flex flex-col gap-10 w-[800px] h-[500px] font-bitter relative">
+      <p className="absolute -top-28 -left-12">
+        Round <b className="text-xl">{round}</b>
+      </p>
       <div className="flex justify-between">
         <p className="text-2xl">{turn}&apos;s turn</p>
         <ScoreBoard numberOfWrongs={numberOfWrongs} />

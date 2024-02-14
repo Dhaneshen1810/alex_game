@@ -30,6 +30,21 @@ const GamePage = () => {
   const [letters, setLetters] = useState<LetterType[]>([]);
   const [turn, setTurn] = useState<string>("");
   const [numberOfWrongs, setNumberOfWrongs] = useState<number>(0);
+  const [round, setRound] = useState<number>(1);
+  const [gameOver, setGameOver] = useState<boolean>(false);
+  const [winner, setWinner] = useState({
+    winner: "",
+    tie: true,
+    player0: {
+      name: "",
+      score: 0,
+    },
+    player1: {
+      name: "",
+      score: 0,
+    },
+  });
+  const [allowType, setAllowType] = useState<boolean>(true);
 
   useEffect(() => {
     setIsDisabled(name.length <= 0);
@@ -66,6 +81,7 @@ const GamePage = () => {
       setNumberOfWrongs(data.numberOfWrongs);
     });
     socket.on("receive_letter", (data: any) => {
+      setAllowType(true);
       setLetters((prevLetters) => {
         return prevLetters.map((letter) => {
           if (data.letter.toLowerCase() === letter.letter.toLowerCase()) {
@@ -84,8 +100,42 @@ const GamePage = () => {
       }
       setNumberOfWrongs(data.numberOfWrongs);
       setTurn((prev) => (prev === data.turn ? prev : data.turn));
+      setRound(data.round);
+      if (data.changeSentence) {
+        setLetters(sentenceToLetters(data.sentence));
+      }
+      if (data.gameOver) {
+        setGameOver(data.gameOver);
+        setWinner(data.winnerPlayer);
+      }
     });
   }, [socket]);
+
+  if (gameOver) {
+    console.log();
+    return (
+      <GameBox>
+        <div className="flex flex-col text-center">
+          <p className="text-2xl self">GAME OVER</p>
+          {winner.tie ? (
+            <p>Tie game. Alex is the winner!</p>
+          ) : (
+            <p>Winner: {winner.winner}</p>
+          )}
+          <div className="flex justify-center gap-10">
+            <div className="flex flex-col">
+              <div>{winner.player0.name}</div>
+              <div>{winner.player0.score}</div>
+            </div>
+            <div className="flex flex-col">
+              <div>{winner.player1.name}</div>
+              <div>{winner.player1.score}</div>
+            </div>
+          </div>
+        </div>
+      </GameBox>
+    );
+  }
 
   if (players.length === 2) {
     return (
@@ -95,6 +145,10 @@ const GamePage = () => {
           turn={turn}
           socket={socket}
           numberOfWrongs={numberOfWrongs}
+          round={round}
+          name={name}
+          allowType={allowType}
+          setAllowType={setAllowType}
         />
       </GameBox>
     );
