@@ -1,4 +1,4 @@
-import { LetterType } from "@/app/(game)/player/page";
+import { LetterType } from "@/app/(game)/alex-game/page";
 import { isAlphabetical } from "@/utils/helpers";
 import Letter from "./letter";
 

@@ -1,4 +1,4 @@
-import { LetterType } from "@/app/(game)/player/page";
+import { LetterType } from "@/app/(game)/alex-game/page";
 
 const sentenceToWords = (sentence: string): string[] => sentence.split(" ");
 

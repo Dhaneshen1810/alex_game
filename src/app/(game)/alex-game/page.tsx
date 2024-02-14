@@ -36,8 +36,8 @@ const GamePage = () => {
   }, [name]);
 
   var socket: any;
-  socket = io("http://localhost:3001");
-  // socket = io("https://alex-game-server-bd00da7b56bd.herokuapp.com/");
+  // socket = io("http://localhost:3001");
+  socket = io("https://alex-game-server-bd00da7b56bd.herokuapp.com/");
 
   const handleJoin = () => {
     if (name !== "") {
