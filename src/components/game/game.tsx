@@ -60,7 +60,7 @@ const Game: React.FC<GameProps> = ({
   return (
     <div className="flex flex-col gap-10 w-[800px] h-[500px]">
       <div className="flex justify-between">
-        <p className="text-2xl">{turn}'s turn</p>
+        <p className="text-2xl">{turn}&apos;s turn</p>
         <ScoreBoard numberOfWrongs={numberOfWrongs} />
       </div>
 

@@ -43,6 +43,7 @@ const ScoreBoard: React.FC<ScoreBoardProps> = ({ numberOfWrongs }) => {
       {scores.map((score) =>
         score.wrong ? (
           <Image
+            key={`${score.key}`}
             src="/radio-button-wrong.png"
             alt={score.key}
             width={50}
@@ -50,6 +51,7 @@ const ScoreBoard: React.FC<ScoreBoardProps> = ({ numberOfWrongs }) => {
           />
         ) : (
           <Image
+            key={`${score.key}`}
             src="/radio-button.png"
             alt={score.key}
             width={50}

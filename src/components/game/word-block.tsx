@@ -9,11 +9,16 @@ export interface WordBlockProps {
 const WordBlock: React.FC<WordBlockProps> = ({ letters }) => {
   return (
     <div className="flex gap-2 flex-wrap">
-      {letters.map((letter) =>
+      {letters.map((letter, index) =>
         isAlphabetical(letter.letter) ? (
-          <Letter hide={letter.hide}>{letter.letter}</Letter>
+          <Letter key={`letter - ${index}`} hide={letter.hide}>
+            {letter.letter}
+          </Letter>
         ) : (
-          <div className="flex flex-col w-10 h-11 gap-1 justify-end text-2xl">
+          <div
+            key={`letter - ${index}`}
+            className="flex flex-col w-10 h-11 gap-1 justify-end text-2xl"
+          >
             {letter.letter}
           </div>
         )
