@@ -1,5 +1,6 @@
 "use client";
 import styles from "./page.module.css";
+// @ts-ignore
 import { io } from "socket.io-client";
 import { useState } from "react";
 import ChatPage from "../components/page";

@@ -1,9 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 import GameBox from "@/components/box/game-box";
+// @ts-ignore
 import { io } from "socket.io-client";
 import Game from "@/components/game/game";
 import { sentenceToLetters } from "@/utils/helpers";
+// @ts-ignore
 import useSound from "use-sound";
 
 const wrongAnswerSoundUrl = "/sounds/wrong-answer.wav";
@@ -41,7 +43,7 @@ const GamePage = () => {
     if (name !== "") {
       setShowSpinner(true);
       setIsDisabled(true);
-      socket.emit("join_room", name, (ack) => {
+      socket.emit("join_room", name, (ack: any) => {
         if (ack.success) {
           // setPlayers((prev) => [...prev, name]);
           console.log("success", ack);
